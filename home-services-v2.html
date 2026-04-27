@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FixIt Home Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;600&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── THEME VARIABLES ── */
+[data-theme="dark"]{
+  --bg:#0e0e0e;--surface:#161616;--card:#1c1c1c;--border:#2a2a2a;
+  --text:#f0ede8;--muted:#888;--shadow:rgba(0,0,0,0.5);
+  --input-bg:#111;
+}
+[data-theme="light"]{
+  --bg:#f5f2ed;--surface:#ffffff;--card:#ffffff;--border:#e0dbd4;
+  --text:#1a1a1a;--muted:#666;--shadow:rgba(0,0,0,0.1);
+  --input-bg:#f9f7f5;
+}
+:root{
+  --accent:#f5a623;--accent2:#e8451e;--blue:#3a9ad9;--brown:#b07a4b;
+  --silver:#999;--pink:#e84393;--green:#27ae60;
+  --font-display:'Bebas Neue',sans-serif;
+  --font-en:'DM Sans',sans-serif;
+  --font-ar:'Cairo',sans-serif;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--font-en);font-size:15px;line-height:1.6;
+  min-height:100vh;overflow-x:hidden;
+  transition:background 0.3s,color 0.3s;
+}
+[lang="ar"] body,[dir="rtl"] body{font-family:var(--font-ar)}
+[dir="rtl"] *{font-family:var(--font-ar)}
+
+/* ── NOISE ── */
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9000;opacity:0.5;
+}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;
+  background:rgba(14,14,14,0.93);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:66px;z-index:500;
+  transition:background 0.3s,border-color 0.3s;
+}
+[data-theme="light"] nav{background:rgba(245,242,237,0.95)}
+
+.nav-logo{font-family:var(--font-display);font-size:2rem;letter-spacing:2px;color:var(--text)}
+.nav-logo span{color:var(--accent)}
+[dir="rtl"] .nav-logo{letter-spacing:0;font-family:var(--font-ar);font-weight:700;font-size:1.5rem}
+
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-links{display:flex;gap:24px;list-style:none;margin-right:16px}
+[dir="rtl"] .nav-links{margin-right:0;margin-left:16px}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:color 0.2s}
+[dir="rtl"] .nav-links a{letter-spacing:0;text-transform:none}
+.nav-links a:hover{color:var(--text)}
+
+.icon-btn{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text);width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1rem;transition:background 0.2s,border-color 0.2s;
+  border-radius:0;
+}
+.icon-btn:hover{border-color:var(--accent)}
+
+.lang-btn{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text);padding:0 14px;height:38px;
+  display:flex;align-items:center;gap:6px;
+  cursor:pointer;font-size:12px;font-weight:600;letter-spacing:1px;
+  transition:background 0.2s,border-color 0.2s;
+}
+.lang-btn:hover{border-color:var(--accent)}
+
+.nav-cta{
+  background:var(--accent);color:#0e0e0e;
+  border:none;padding:0 22px;height:38px;
+  font-family:var(--font-en);font-weight:600;font-size:13px;
+  cursor:pointer;transition:background 0.2s,transform 0.15s;white-space:nowrap;
+}
+[dir="rtl"] .nav-cta{font-family:var(--font-ar)}
+.nav-cta:hover{background:#ffb83d;transform:translateY(-1px)}
+
+/* ── HERO ── */
+.hero{position:relative;padding:110px 48px 90px;overflow:hidden}
+.hero-grid-bg{
+  position:absolute;inset:0;
+  background-image:linear-gradient(to right,var(--border) 1px,transparent 1px),linear-gradient(to bottom,var(--border) 1px,transparent 1px);
+  background-size:60px 60px;opacity:0.3;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 0%,black 40%,transparent 100%);
+}
+.hero-badge{display:inline-block;border:1px solid var(--accent);color:var(--accent);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;margin-bottom:24px;animation:fadeUp 0.6s ease both}
+[dir="rtl"] .hero-badge{letter-spacing:0;text-transform:none}
+.hero h1{font-family:var(--font-display);font-size:clamp(3.5rem,9vw,7.5rem);line-height:0.95;letter-spacing:2px;text-transform:uppercase;max-width:750px;animation:fadeUp 0.6s 0.1s ease both}
+[dir="rtl"] .hero h1{font-family:var(--font-ar);font-weight:700;font-size:clamp(2.5rem,7vw,5rem);line-height:1.2;letter-spacing:0;text-transform:none}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero h1 .outline{-webkit-text-stroke:1.5px var(--text);color:transparent}
+[dir="rtl"] .hero h1 .outline{-webkit-text-stroke:0;color:var(--accent)}
+.hero-sub{margin-top:22px;font-size:16px;color:var(--muted);max-width:480px;font-weight:300;animation:fadeUp 0.6s 0.2s ease both}
+.hero-actions{margin-top:40px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;animation:fadeUp 0.6s 0.3s ease both}
+.hero-stats{margin-top:64px;display:flex;gap:56px;border-top:1px solid var(--border);padding-top:36px;animation:fadeUp 0.6s 0.4s ease both;flex-wrap:wrap}
+.stat-value{font-family:var(--font-display);font-size:2.6rem;color:var(--accent);letter-spacing:1px}
+[dir="rtl"] .stat-value{font-family:var(--font-ar);font-weight:700}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
+[dir="rtl"] .stat-label{letter-spacing:0;text-transform:none}
+
+/* BUTTONS */
+.btn-primary{background:var(--accent);color:#0e0e0e;border:none;padding:14px 32px;font-family:var(--font-en);font-size:14px;font-weight:600;cursor:pointer;transition:background 0.2s,transform 0.15s}
+[dir="rtl"] .btn-primary{font-family:var(--font-ar)}
+.btn-primary:hover{background:#ffb83d;transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border);padding:14px 32px;font-family:var(--font-en);font-size:14px;font-weight:600;cursor:pointer;transition:border-color 0.2s,transform 0.15s}
+[dir="rtl"] .btn-ghost{font-family:var(--font-ar)}
+.btn-ghost:hover{border-color:var(--muted);transform:translateY(-2px)}
+
+/* ── SEARCH ── */
+.search-section{padding:0 48px 72px;animation:fadeUp 0.6s 0.5s ease both}
+.search-bar{display:flex;background:var(--card);border:1px solid var(--border);max-width:720px}
+.search-bar input{flex:1;background:transparent;border:none;outline:none;padding:16px 22px;color:var(--text);font-family:var(--font-en);font-size:14px}
+[dir="rtl"] .search-bar input{font-family:var(--font-ar);text-align:right}
+.search-bar input::placeholder{color:var(--muted)}
+.search-select{background:var(--surface);border:none;border-left:1px solid var(--border);color:var(--muted);padding:16px 18px;font-family:var(--font-en);font-size:13px;cursor:pointer;outline:none}
+[dir="rtl"] .search-select{border-left:none;border-right:1px solid var(--border);font-family:var(--font-ar)}
+.search-btn{background:var(--accent2);border:none;color:white;padding:16px 26px;font-family:var(--font-en);font-weight:600;font-size:13px;cursor:pointer;transition:background 0.2s;white-space:nowrap}
+[dir="rtl"] .search-btn{font-family:var(--font-ar)}
+.search-btn:hover{background:#ff5a32}
+
+/* ── SECTIONS ── */
+.section{padding:72px 48px}
+.section-label{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+[dir="rtl"] .section-label{letter-spacing:0;text-transform:none}
+.section-title{font-family:var(--font-display);font-size:clamp(2rem,4.5vw,3.5rem);letter-spacing:1px;text-transform:uppercase;line-height:1;margin-bottom:44px}
+[dir="rtl"] .section-title{font-family:var(--font-ar);font-weight:700;letter-spacing:0;text-transform:none;line-height:1.3}
+
+/* ── SERVICES GRID ── */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px}
+.service-card{background:var(--card);border:1px solid var(--border);padding:32px 28px;cursor:pointer;position:relative;overflow:hidden;transition:transform 0.25s,border-color 0.25s}
+.service-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--ca,transparent) 0%,transparent 60%);opacity:0;transition:opacity 0.3s}
+.service-card:hover::before{opacity:1}
+.service-card:hover{transform:translateY(-4px);border-color:var(--ca,var(--border))}
+.service-card[data-s="electrician"]{--ca:#f5a623}
+.service-card[data-s="plumber"]{--ca:#3a9ad9}
+.service-card[data-s="carpenter"]{--ca:#b07a4b}
+.service-card[data-s="blacksmith"]{--ca:#999}
+.service-card[data-s="painter"]{--ca:#e84393}
+.service-card[data-s="construction"]{--ca:#27ae60}
+.service-icon{font-size:2.4rem;margin-bottom:18px;display:block}
+.service-name{font-family:var(--font-display);font-size:1.6rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+[dir="rtl"] .service-name{font-family:var(--font-ar);font-weight:700;letter-spacing:0;text-transform:none;font-size:1.3rem}
+.service-desc{font-size:13px;color:var(--muted);font-weight:300;line-height:1.7;margin-bottom:18px}
+.service-price{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+[dir="rtl"] .service-price{letter-spacing:0;text-transform:none}
+.service-tag{display:inline-block;margin-top:14px;padding:5px 14px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;border:1px solid}
+[dir="rtl"] .service-tag{letter-spacing:0;text-transform:none}
+.service-card:hover .service-tag{background:var(--ca);border-color:var(--ca);color:#0e0e0e}
+.service-number{position:absolute;top:18px;right:22px;font-family:var(--font-display);font-size:3rem;color:var(--border);line-height:1;transition:color 0.3s}
+[dir="rtl"] .service-number{right:auto;left:22px}
+.service-card:hover .service-number{color:var(--ca);opacity:0.25}
+
+/* ── HOW IT WORKS ── */
+.steps-section{padding:72px 48px;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.step{padding:36px 28px;border-right:1px solid var(--border)}
+[dir="rtl"] .step{border-right:none;border-left:1px solid var(--border)}
+.step:last-child{border-right:none}
+[dir="rtl"] .step:last-child{border-left:none}
+.step-num{font-family:var(--font-display);font-size:3.5rem;color:var(--border);line-height:1;margin-bottom:14px}
+[dir="rtl"] .step-num{font-family:var(--font-ar);font-weight:700}
+.step-title{font-family:var(--font-display);font-size:1.2rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+[dir="rtl"] .step-title{font-family:var(--font-ar);font-weight:700;letter-spacing:0;text-transform:none}
+.step-desc{font-size:13px;color:var(--muted);font-weight:300;line-height:1.7}
+.step-icon{font-size:1.4rem;margin-bottom:10px}
+
+/* ── EMPLOYEE SECTION ── */
+.employees-section{padding:72px 48px;background:var(--bg)}
+.employees-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px}
+.filter-btn{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:8px 18px;font-family:var(--font-en);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.2s}
+[dir="rtl"] .filter-btn{font-family:var(--font-ar);letter-spacing:0;text-transform:none}
+.filter-btn.active,.filter-btn:hover{background:var(--accent);border-color:var(--accent);color:#0e0e0e}
+.employees-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+
+.emp-card{background:var(--card);border:1px solid var(--border);padding:28px;transition:transform 0.25s,border-color 0.25s;position:relative}
+.emp-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.emp-card-top{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px}
+.emp-avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;border:2px solid var(--border)}
+.emp-info{flex:1}
+.emp-name{font-weight:600;font-size:15px;margin-bottom:2px}
+.emp-trade{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+[dir="rtl"] .emp-trade{letter-spacing:0;text-transform:none}
+.emp-trade-badge{display:inline-block;padding:3px 10px;font-size:10px;font-weight:600;letter-spacing:0.5px;margin-top:4px;border-radius:0}
+.emp-stars{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.stars{color:var(--accent);font-size:0.85rem;letter-spacing:1px}
+.rating-val{font-size:12px;font-weight:600}
+.review-count{font-size:11px;color:var(--muted)}
+.emp-bio{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:16px}
+.emp-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:14px}
+.emp-price{font-family:var(--font-display);font-size:1.4rem;color:var(--accent);letter-spacing:1px}
+[dir="rtl"] .emp-price{font-family:var(--font-ar);font-weight:700;letter-spacing:0}
+.emp-price-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px}
+[dir="rtl"] .emp-price-label{text-transform:none;letter-spacing:0}
+.hire-btn{background:var(--accent);border:none;color:#0e0e0e;padding:8px 18px;font-family:var(--font-en);font-size:12px;font-weight:600;cursor:pointer;transition:background 0.2s}
+[dir="rtl"] .hire-btn{font-family:var(--font-ar)}
+.hire-btn:hover{background:#ffb83d}
+.emp-badge-available{position:absolute;top:16px;right:16px;width:10px;height:10px;border-radius:50%;background:#27ae60;border:2px solid var(--card)}
+[dir="rtl"] .emp-badge-available{right:auto;left:16px}
+.emp-badge-busy{position:absolute;top:16px;right:16px;width:10px;height:10px;border-radius:50%;background:#e74c3c;border:2px solid var(--card)}
+[dir="rtl"] .emp-badge-busy{right:auto;left:16px}
+
+/* ── REVIEWS ── */
+.reviews-section{padding:72px 48px;background:var(--surface);border-top:1px solid var(--border)}
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2px;margin-top:44px}
+.review-card{background:var(--card);border:1px solid var(--border);padding:28px}
+.review-stars{color:var(--accent);font-size:0.9rem;margin-bottom:12px}
+.review-text{font-size:13px;color:var(--muted);font-style:italic;font-weight:300;line-height:1.7;margin-bottom:18px}
+.review-author{font-size:13px;font-weight:600}
+.review-role{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+[dir="rtl"] .review-role{letter-spacing:0;text-transform:none}
+
+/* ── FOOTER ── */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:56px 48px 36px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:44px}
+.footer-brand{font-family:var(--font-display);font-size:1.7rem;letter-spacing:2px;margin-bottom:12px}
+[dir="rtl"] .footer-brand{font-family:var(--font-ar);font-weight:700;letter-spacing:0;font-size:1.4rem}
+.footer-brand span{color:var(--accent)}
+.footer-tagline{font-size:13px;color:var(--muted);font-weight:300;max-width:230px}
+.footer-col h4{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+[dir="rtl"] .footer-col h4{letter-spacing:0;text-transform:none}
+.footer-links{list-style:none}
+.footer-links li{margin-bottom:9px}
+.footer-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color 0.2s;background:none;border:none;cursor:pointer;font-family:inherit;padding:0}
+.footer-links a:hover{color:var(--text)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:12px;color:var(--muted)}
+.footer-socials{display:flex;gap:18px}
+.footer-socials a{font-size:13px;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-socials a:hover{color:var(--accent)}
+
+/* ── MODALS ── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.88);backdrop-filter:blur(8px);
+  z-index:600;align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.active{display:flex}
+.modal{
+  background:var(--card);border:1px solid var(--border);
+  width:100%;max-width:560px;max-height:90vh;overflow-y:auto;
+  padding:44px;position:relative;animation:slideUp 0.3s ease;
+}
+.modal-wide{max-width:680px}
+.modal-close{position:absolute;top:18px;right:22px;background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;transition:color 0.2s;z-index:1}
+[dir="rtl"] .modal-close{right:auto;left:22px}
+.modal-close:hover{color:var(--text)}
+.modal-title{font-family:var(--font-display);font-size:2rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+[dir="rtl"] .modal-title{font-family:var(--font-ar);font-weight:700;letter-spacing:0;text-transform:none;font-size:1.6rem}
+.modal-sub{font-size:13px;color:var(--muted);margin-bottom:28px}
+
+/* ── FORMS ── */
+.form-row{margin-bottom:18px}
+.form-label{display:block;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+[dir="rtl"] .form-label{letter-spacing:0;text-transform:none;text-align:right}
+.form-input,.form-select,.form-textarea{
+  width:100%;background:var(--input-bg);border:1px solid var(--border);
+  color:var(--text);padding:12px 15px;
+  font-family:var(--font-en);font-size:14px;outline:none;
+  transition:border-color 0.2s;
+}
+[dir="rtl"] .form-input,[dir="rtl"] .form-select,[dir="rtl"] .form-textarea{font-family:var(--font-ar);text-align:right}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent)}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--muted)}
+.form-textarea{resize:vertical;min-height:90px}
+.form-select option{background:var(--surface)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.submit-btn{
+  width:100%;background:var(--accent);color:#0e0e0e;
+  border:none;padding:15px;font-family:var(--font-en);
+  font-size:14px;font-weight:600;cursor:pointer;margin-top:6px;
+  transition:background 0.2s,transform 0.15s;letter-spacing:0.5px;
+}
+[dir="rtl"] .submit-btn{font-family:var(--font-ar);letter-spacing:0}
+.submit-btn:hover{background:#ffb83d;transform:translateY(-1px)}
+
+.form-tabs{display:flex;gap:0;margin-bottom:28px;border:1px solid var(--border)}
+.form-tab{flex:1;padding:12px;background:transparent;border:none;color:var(--muted);font-family:var(--font-en);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:1px}
+[dir="rtl"] .form-tab{font-family:var(--font-ar);text-transform:none;letter-spacing:0}
+.form-tab.active{background:var(--accent);color:#0e0e0e}
+
+.star-rating{display:flex;gap:4px;margin-bottom:6px}
+.star-rating span{font-size:1.4rem;cursor:pointer;color:var(--border);transition:color 0.2s}
+.star-rating span.active{color:var(--accent)}
+
+.price-row{display:flex;align-items:center;gap:10px}
+.price-prefix{font-size:1rem;color:var(--muted);font-weight:600}
+
+/* ── EMP PROFILE MODAL ── */
+.emp-profile-header{display:flex;gap:20px;align-items:center;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.emp-profile-avatar{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.4rem;border:3px solid var(--accent)}
+.emp-profile-name{font-family:var(--font-display);font-size:1.8rem;letter-spacing:1px}
+[dir="rtl"] .emp-profile-name{font-family:var(--font-ar);font-weight:700;letter-spacing:0;font-size:1.5rem}
+.emp-profile-trade{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+[dir="rtl"] .emp-profile-trade{letter-spacing:0;text-transform:none}
+.emp-profile-rate{font-family:var(--font-display);font-size:2rem;color:var(--accent);letter-spacing:1px}
+[dir="rtl"] .emp-profile-rate{font-family:var(--font-ar);font-weight:700;letter-spacing:0}
+.emp-profile-rate-lbl{font-size:11px;color:var(--muted);text-transform:uppercase}
+[dir="rtl"] .emp-profile-rate-lbl{text-transform:none}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
+.info-item{background:var(--surface);border:1px solid var(--border);padding:14px}
+.info-item-label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+[dir="rtl"] .info-item-label{letter-spacing:0;text-transform:none}
+.info-item-val{font-size:14px;font-weight:600}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:28px;right:28px;
+  background:var(--accent);color:#0e0e0e;
+  padding:14px 26px;font-weight:600;font-size:13px;
+  z-index:9999;transform:translateY(80px);opacity:0;
+  transition:all 0.3s ease;max-width:320px;
+}
+[dir="rtl"] .toast{right:auto;left:28px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.error{background:var(--accent2);color:white}
+
+/* ── SECTION DIVIDER ── */
+.section-divider{height:1px;background:var(--border);margin:0 48px}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .hero{padding:70px 20px 50px}
+  .hero-stats{gap:28px}
+  .search-section,.section,.steps-section,.employees-section,.reviews-section{padding-left:20px;padding-right:20px}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  footer{padding:40px 20px 28px}
+  .form-grid{grid-template-columns:1fr}
+  .modal{padding:28px 20px;margin:10px}
+  .info-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-logo">Fix<span>It</span></div>
+  <ul class="nav-links">
+    <li><a href="#services" data-i18n="nav.services">Services</a></li>
+    <li><a href="#employees" data-i18n="nav.pros">Find a Pro</a></li>
+    <li><a href="#how-it-works" data-i18n="nav.how">How It Works</a></li>
+    <li><a href="#reviews" data-i18n="nav.reviews">Reviews</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-btn" onclick="toggleLang()" id="langBtn">🌐 عربي</button>
+    <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle theme">🌙</button>
+    <button class="nav-cta" onclick="openRegisterModal()" data-i18n="nav.register">Join as a Pro</button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-badge" data-i18n="hero.badge">Trusted Home Services Platform</div>
+  <h1 data-i18n-html="hero.h1">Your Home,<br/><em>Fixed</em> Right.<br/><span class="outline">Guaranteed.</span></h1>
+  <p class="hero-sub" data-i18n="hero.sub">Connect with certified electricians, plumbers, carpenters, blacksmiths, painters, and construction pros — fast and reliable.</p>
+  <div class="hero-actions">
+    <button class="btn-primary" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})" data-i18n="hero.explore">Explore Services</button>
+    <button class="btn-ghost" onclick="openBookingModal(null)" data-i18n="hero.quote">Get a Free Quote</button>
+  </div>
+  <div class="hero-stats">
+    <div><div class="stat-value">12K+</div><div class="stat-label" data-i18n="hero.stat1">Jobs Completed</div></div>
+    <div><div class="stat-value">500+</div><div class="stat-label" data-i18n="hero.stat2">Verified Pros</div></div>
+    <div><div class="stat-value">4.9★</div><div class="stat-label" data-i18n="hero.stat3">Average Rating</div></div>
+    <div><div class="stat-value">48hr</div><div class="stat-label" data-i18n="hero.stat4">Response Time</div></div>
+  </div>
+</section>
+
+<!-- ══ SEARCH ══ -->
+<div class="search-section">
+  <div class="search-bar">
+    <input type="text" id="searchInput" data-i18n-placeholder="search.placeholder" placeholder="What service do you need?"/>
+    <select class="search-select" id="locationSelect">
+      <option data-i18n="search.loc0">Any Location</option>
+      <option data-i18n="search.loc1">Downtown</option>
+      <option data-i18n="search.loc2">Suburbs</option>
+      <option data-i18n="search.loc3">North District</option>
+      <option data-i18n="search.loc4">South District</option>
+    </select>
+    <button class="search-btn" onclick="handleSearch()" data-i18n="search.btn">Search →</button>
+  </div>
+</div>
+
+<!-- ══ SERVICES ══ -->
+<section class="section" id="services">
+  <div class="section-label" data-i18n="services.label">What We Offer</div>
+  <div class="section-title" data-i18n="services.title">Our Services</div>
+  <div class="services-grid">
+    <div class="service-card" data-s="electrician" onclick="filterEmployees('electrician');document.getElementById('employees').scrollIntoView({behavior:'smooth'})">
+      <span class="service-number">01</span>
+      <span class="service-icon">⚡</span>
+      <div class="service-name" data-i18n="svc.electrician">Electrician</div>
+      <p class="service-desc" data-i18n="svc.electrician.desc">Wiring, circuit breakers, panel upgrades, outlet installation, and full electrical inspections.</p>
+      <div class="service-price" style="color:#f5a623" data-i18n="svc.electrician.price">From $80 / hr</div>
+      <div class="service-tag" style="border-color:#f5a623;color:#f5a623" data-i18n="svc.findpro">Find a Pro</div>
+    </div>
+    <div class="service-card" data-s="plumber" onclick="filterEmployees('plumber');document.getElementById('employees').scrollIntoView({behavior:'smooth'})">
+      <span class="service-number">02</span>
+      <span class="service-icon">🔧</span>
+      <div class="service-name" data-i18n="svc.plumber">Plumber</div>
+      <p class="service-desc" data-i18n="svc.plumber.desc">Pipe repairs, drain unclogging, water heater installation, leak detection, and full plumbing overhauls.</p>
+      <div class="service-price" style="color:#3a9ad9" data-i18n="svc.plumber.price">From $75 / hr</div>
+      <div class="service-tag" style="border-color:#3a9ad9;color:#3a9ad9" data-i18n="svc.findpro">Find a Pro</div>
+    </div>
+    <div class="service-card" data-s="carpenter" onclick="filterEmployees('carpenter');document.getElementById('employees').scrollIntoView({behavior:'smooth'})">
+      <span class="service-number">03</span>
+      <span class="service-icon">🪵</span>
+      <div class="service-name" data-i18n="svc.carpenter">Carpenter</div>
+      <p class="service-desc" data-i18n="svc.carpenter.desc">Custom furniture, cabinetry, door framing, deck construction, and fine woodworking.</p>
+      <div class="service-price" style="color:#b07a4b" data-i18n="svc.carpenter.price">From $65 / hr</div>
+      <div class="service-tag" style="border-color:#b07a4b;color:#b07a4b" data-i18n="svc.findpro">Find a Pro</div>
+    </div>
+    <div class="service-card" data-s="blacksmith" onclick="filterEmployees('blacksmith');document.getElementById('employees').scrollIntoView({behavior:'smooth'})">
+      <span class="service-number">04</span>
+      <span class="service-icon">🔩</span>
+      <div class="service-name" data-i18n="svc.blacksmith">Blacksmith</div>
+      <p class="service-desc" data-i18n="svc.blacksmith.desc">Custom ironwork, decorative gates, railings, hinges, and ornamental metalwork.</p>
+      <div class="service-price" style="color:#aaa" data-i18n="svc.blacksmith.price">From $90 / hr</div>
+      <div class="service-tag" style="border-color:#aaa;color:#aaa" data-i18n="svc.findpro">Find a Pro</div>
+    </div>
+    <div class="service-card" data-s="painter" onclick="filterEmployees('painter');document.getElementById('employees').scrollIntoView({behavior:'smooth'})">
+      <span class="service-number">05</span>
+      <span class="service-icon">🎨</span>
+      <div class="service-name" data-i18n="svc.painter">Painter</div>
+      <p class="service-desc" data-i18n="svc.painter.desc">Interior and exterior painting, wallpaper removal, texture finishing, and color consultation.</p>
+      <div class="service-price" style="color:#e84393" data-i18n="svc.painter.price">From $55 / hr</div>
+      <div class="service-tag" style="border-color:#e84393;color:#e84393" data-i18n="svc.findpro">Find a Pro</div>
+    </div>
+    <div class="service-card" data-s="construction" onclick="filterEmployees('construction');document.getElementById('employees').scrollIntoView({behavior:'smooth'})">
+      <span class="service-number">06</span>
+      <span class="service-icon">🧱</span>
+      <div class="service-name" data-i18n="svc.construction">Walls & Ceilings</div>
+      <p class="service-desc" data-i18n="svc.construction.desc">Plastering, drywall, tiling, partition walls, false ceilings, and full renovation works.</p>
+      <div class="service-price" style="color:#27ae60" data-i18n="svc.construction.price">From $70 / hr</div>
+      <div class="service-tag" style="border-color:#27ae60;color:#27ae60" data-i18n="svc.findpro">Find a Pro</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══ EMPLOYEES ══ -->
+<section class="employees-section" id="employees">
+  <div class="section-label" data-i18n="emp.label">Browse Professionals</div>
+  <div class="section-title" data-i18n="emp.title">Find Your Pro</div>
+  <div class="employees-filter" id="empFilter">
+    <button class="filter-btn active" data-filter="all" onclick="filterEmployees('all')" data-i18n="emp.filter.all">All</button>
+    <button class="filter-btn" data-filter="electrician" onclick="filterEmployees('electrician')" data-i18n="svc.electrician">Electrician</button>
+    <button class="filter-btn" data-filter="plumber" onclick="filterEmployees('plumber')" data-i18n="svc.plumber">Plumber</button>
+    <button class="filter-btn" data-filter="carpenter" onclick="filterEmployees('carpenter')" data-i18n="svc.carpenter">Carpenter</button>
+    <button class="filter-btn" data-filter="blacksmith" onclick="filterEmployees('blacksmith')" data-i18n="svc.blacksmith">Blacksmith</button>
+    <button class="filter-btn" data-filter="painter" onclick="filterEmployees('painter')" data-i18n="svc.painter">Painter</button>
+    <button class="filter-btn" data-filter="construction" onclick="filterEmployees('construction')" data-i18n="svc.construction">Walls & Ceilings</button>
+  </div>
+  <div class="employees-grid" id="employeesGrid"></div>
+</section>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section class="steps-section" id="how-it-works">
+  <div class="section-label" data-i18n="how.label">Simple Process</div>
+  <div class="section-title" data-i18n="how.title">How It Works</div>
+  <div class="steps-grid">
+    <div class="step"><div class="step-num">01</div><div class="step-icon">🔍</div><div class="step-title" data-i18n="how.s1.title">Choose a Service</div><p class="step-desc" data-i18n="how.s1.desc">Browse our six core trades and select the expert you need for your project.</p></div>
+    <div class="step"><div class="step-num">02</div><div class="step-icon">👤</div><div class="step-title" data-i18n="how.s2.title">Pick a Pro</div><p class="step-desc" data-i18n="how.s2.desc">Browse verified professionals, read reviews, compare prices, and choose the best fit.</p></div>
+    <div class="step"><div class="step-num">03</div><div class="step-icon">📋</div><div class="step-title" data-i18n="how.s3.title">Book & Describe</div><p class="step-desc" data-i18n="how.s3.desc">Submit your request in under 2 minutes. The pro confirms and schedules your appointment.</p></div>
+    <div class="step"><div class="step-num">04</div><div class="step-icon">🏠</div><div class="step-title" data-i18n="how.s4.title">Job Done</div><p class="step-desc" data-i18n="how.s4.desc">Your pro arrives on time. Pay securely and leave a review to help the community.</p></div>
+  </div>
+</section>
+
+<!-- ══ REVIEWS ══ -->
+<section class="reviews-section" id="reviews">
+  <div class="section-label" data-i18n="rev.label">Client Feedback</div>
+  <div class="section-title" data-i18n="rev.title">What People Say</div>
+  <div class="reviews-grid">
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-i18n="rev.1">"The electrician fixed our panel in under two hours. Professional, clean, thorough. I'd recommend FixIt to anyone."</p><div class="review-author">Marcus T.</div><div class="review-role" data-i18n="rev.1.role">Homeowner · Electrician</div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-i18n="rev.2">"Our plumber diagnosed the leak in minutes and had it fixed the same day. No hidden fees at all."</p><div class="review-author">Priya N.</div><div class="review-role" data-i18n="rev.2.role">Apartment Owner · Plumber</div></div>
+    <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text" data-i18n="rev.3">"Beautiful custom shelving by the carpenter. The craftsmanship is stunning and fits the room perfectly."</p><div class="review-author">James & Carol R.</div><div class="review-role" data-i18n="rev.3.role">Property Owners · Carpenter</div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-i18n="rev.4">"The walls and ceiling renovation was flawless. Done on time, clean, and the finish is incredible."</p><div class="review-author">Sofia M.</div><div class="review-role" data-i18n="rev.4.role">Villa Owner · Construction</div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-i18n="rev.5">"Our painter transformed the whole house in three days. Impeccable prep work, zero mess."</p><div class="review-author">Derrick B.</div><div class="review-role" data-i18n="rev.5.role">Homeowner · Painter</div></div>
+    <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text" data-i18n="rev.6">"Fast booking, reliable pros, smooth payment. FixIt is my go-to for all home repairs."</p><div class="review-author">Angela W.</div><div class="review-role" data-i18n="rev.6.role">Repeat Customer · Multiple</div></div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Fix<span>It</span></div>
+      <p class="footer-tagline" data-i18n="footer.tagline">Connecting homeowners with skilled tradespeople. Quality you can count on.</p>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.services">Services</h4>
+      <ul class="footer-links">
+        <li><a onclick="filterEmployees('electrician');document.getElementById('employees').scrollIntoView({behavior:'smooth'})" data-i18n="svc.electrician">Electrician</a></li>
+        <li><a onclick="filterEmployees('plumber');document.getElementById('employees').scrollIntoView({behavior:'smooth'})" data-i18n="svc.plumber">Plumber</a></li>
+        <li><a onclick="filterEmployees('carpenter');document.getElementById('employees').scrollIntoView({behavior:'smooth'})" data-i18n="svc.carpenter">Carpenter</a></li>
+        <li><a onclick="filterEmployees('blacksmith');document.getElementById('employees').scrollIntoView({behavior:'smooth'})" data-i18n="svc.blacksmith">Blacksmith</a></li>
+        <li><a onclick="filterEmployees('painter');document.getElementById('employees').scrollIntoView({behavior:'smooth'})" data-i18n="svc.painter">Painter</a></li>
+        <li><a onclick="filterEmployees('construction');document.getElementById('employees').scrollIntoView({behavior:'smooth'})" data-i18n="svc.construction">Walls & Ceilings</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.company">Company</h4>
+      <ul class="footer-links">
+        <li><a href="#" data-i18n="footer.about">About Us</a></li>
+        <li><a href="#" data-i18n="footer.careers">Careers</a></li>
+        <li><a onclick="openRegisterModal()" data-i18n="footer.joinpro">Join as a Pro</a></li>
+        <li><a href="#" data-i18n="footer.blog">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.support">Support</h4>
+      <ul class="footer-links">
+        <li><a href="#" data-i18n="footer.help">Help Center</a></li>
+        <li><a href="#" data-i18n="footer.privacy">Privacy Policy</a></li>
+        <li><a href="#" data-i18n="footer.terms">Terms of Service</a></li>
+        <li><a href="#" data-i18n="footer.contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy" data-i18n="footer.copy">© 2026 FixIt Home Services. All rights reserved.</div>
+    <div class="footer-socials">
+      <a href="#">Twitter</a><a href="#">Instagram</a><a href="#">Facebook</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ MODAL: BOOKING ══ -->
+<div class="modal-overlay" id="bookingModal" onclick="closeModalOutside(event,'bookingModal')">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('bookingModal')">✕</button>
+    <div class="modal-title" id="bookingTitle" data-i18n="book.title">Book a Service</div>
+    <p class="modal-sub" id="bookingSub" data-i18n="book.sub">Fill in your details and we'll connect you with a top-rated pro.</p>
+    <div class="form-row">
+      <label class="form-label" data-i18n="form.name">Full Name</label>
+      <input class="form-input" type="text" id="bName" data-i18n-placeholder="form.name.ph" placeholder="John Doe"/>
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <label class="form-label" data-i18n="form.email">Email</label>
+        <input class="form-input" type="email" id="bEmail" placeholder="you@email.com"/>
+      </div>
+      <div class="form-row">
+        <label class="form-label" data-i18n="form.phone">Phone</label>
+        <input class="form-input" type="tel" id="bPhone" placeholder="+1 555 000 0000"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label" data-i18n="form.service">Service Type</label>
+      <select class="form-select" id="bService">
+        <option value="" data-i18n="form.service.ph">Select a service...</option>
+        <option value="electrician" data-i18n="svc.electrician">Electrician</option>
+        <option value="plumber" data-i18n="svc.plumber">Plumber</option>
+        <option value="carpenter" data-i18n="svc.carpenter">Carpenter</option>
+        <option value="blacksmith" data-i18n="svc.blacksmith">Blacksmith</option>
+        <option value="painter" data-i18n="svc.painter">Painter</option>
+        <option value="construction" data-i18n="svc.construction">Walls & Ceilings</option>
+      </select>
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <label class="form-label" data-i18n="form.date">Preferred Date</label>
+        <input class="form-input" type="date" id="bDate"/>
+      </div>
+      <div class="form-row">
+        <label class="form-label" data-i18n="form.time">Preferred Time</label>
+        <select class="form-select" id="bTime">
+          <option data-i18n="form.time.m">Morning (8–12)</option>
+          <option data-i18n="form.time.a">Afternoon (12–5)</option>
+          <option data-i18n="form.time.e">Evening (5–8)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label" data-i18n="form.desc">Describe the Job</label>
+      <textarea class="form-textarea" id="bDesc" data-i18n-placeholder="form.desc.ph" placeholder="Tell us what needs to be done..."></textarea>
+    </div>
+    <button class="submit-btn" onclick="submitBooking()" data-i18n="form.confirm">Confirm Booking →</button>
+  </div>
+</div>
+
+<!-- ══ MODAL: REGISTER PRO ══ -->
+<div class="modal-overlay" id="registerModal" onclick="closeModalOutside(event,'registerModal')">
+  <div class="modal modal-wide">
+    <button class="modal-close" onclick="closeModal('registerModal')">✕</button>
+    <div class="modal-title" data-i18n="reg.title">Join as a Pro</div>
+    <p class="modal-sub" data-i18n="reg.sub">Register your professional profile — customers will find and hire you directly.</p>
+    <div class="form-row">
+      <label class="form-label" data-i18n="form.name">Full Name</label>
+      <input class="form-input" type="text" id="rName" data-i18n-placeholder="form.name.ph" placeholder="Your Name"/>
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <label class="form-label" data-i18n="form.email">Email</label>
+        <input class="form-input" type="email" id="rEmail" placeholder="you@email.com"/>
+      </div>
+      <div class="form-row">
+        <label class="form-label" data-i18n="form.phone">Phone</label>
+        <input class="form-input" type="tel" id="rPhone" placeholder="+1 555 000 0000"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label" data-i18n="reg.trade">Trade / Specialty</label>
+      <select class="form-select" id="rTrade">
+        <option value="" data-i18n="form.service.ph">Select your trade...</option>
+        <option value="electrician" data-i18n="svc.electrician">Electrician</option>
+        <option value="plumber" data-i18n="svc.plumber">Plumber</option>
+        <option value="carpenter" data-i18n="svc.carpenter">Carpenter</option>
+        <option value="blacksmith" data-i18n="svc.blacksmith">Blacksmith</option>
+        <option value="painter" data-i18n="svc.painter">Painter</option>
+        <option value="construction" data-i18n="svc.construction">Walls & Ceilings</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label class="form-label" data-i18n="reg.city">City / Area</label>
+      <input class="form-input" type="text" id="rCity" data-i18n-placeholder="reg.city.ph" placeholder="e.g. Downtown, Suburbs..."/>
+    </div>
+    <div class="form-row">
+      <label class="form-label" data-i18n="reg.exp">Years of Experience</label>
+      <input class="form-input" type="number" id="rExp" min="0" max="50" placeholder="5"/>
+    </div>
+    <div class="form-row">
+      <label class="form-label" data-i18n="reg.price">Your Hourly Rate ($)</label>
+      <div class="price-row">
+        <span class="price-prefix">$</span>
+        <input class="form-input" type="number" id="rPrice" min="10" max="500" placeholder="80" style="flex:1"/>
+        <span class="price-prefix" data-i18n="reg.perhr">/ hr</span>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label" data-i18n="reg.bio">Short Bio</label>
+      <textarea class="form-textarea" id="rBio" data-i18n-placeholder="reg.bio.ph" placeholder="Tell clients about yourself, your experience, and what makes you great..."></textarea>
+    </div>
+    <div class="form-row">
+      <label class="form-label" data-i18n="reg.avail">Availability</label>
+      <select class="form-select" id="rAvail">
+        <option value="available" data-i18n="reg.avail.yes">Available Now</option>
+        <option value="busy" data-i18n="reg.avail.no">Currently Busy</option>
+      </select>
+    </div>
+    <button class="submit-btn" onclick="submitRegister()" data-i18n="reg.submit">Create My Profile →</button>
+  </div>
+</div>
+
+<!-- ══ MODAL: EMPLOYEE PROFILE ══ -->
+<div class="modal-overlay" id="empModal" onclick="closeModalOutside(event,'empModal')">
+  <div class="modal modal-wide" id="empModalContent">
+    <button class="modal-close" onclick="closeModal('empModal')">✕</button>
+    <div id="empModalBody"></div>
+  </div>
+</div>
+
+<!-- ══ TOAST ══ -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════
+// TRANSLATIONS
+// ══════════════════════════════════════════════════
+const i18n = {
+  en: {
+    'nav.services':'Services','nav.pros':'Find a Pro','nav.how':'How It Works',
+    'nav.reviews':'Reviews','nav.register':'Join as a Pro',
+    'hero.badge':'Trusted Home Services Platform',
+    'hero.h1':'Your Home,<br/><em>Fixed</em> Right.<br/><span class="outline">Guaranteed.</span>',
+    'hero.sub':'Connect with certified electricians, plumbers, carpenters, blacksmiths, painters, and construction pros — fast and reliable.',
+    'hero.explore':'Explore Services','hero.quote':'Get a Free Quote',
+    'hero.stat1':'Jobs Completed','hero.stat2':'Verified Pros','hero.stat3':'Average Rating','hero.stat4':'Response Time',
+    'search.placeholder':'What service do you need?','search.btn':'Search →',
+    'search.loc0':'Any Location','search.loc1':'Downtown','search.loc2':'Suburbs','search.loc3':'North District','search.loc4':'South District',
+    'services.label':'What We Offer','services.title':'Our Services',
+    'svc.electrician':'Electrician','svc.electrician.desc':'Wiring, circuit breakers, panel upgrades, outlet installation, and full electrical inspections.',
+    'svc.electrician.price':'From $80 / hr',
+    'svc.plumber':'Plumber','svc.plumber.desc':'Pipe repairs, drain unclogging, water heater installation, leak detection, and full plumbing overhauls.',
+    'svc.plumber.price':'From $75 / hr',
+    'svc.carpenter':'Carpenter','svc.carpenter.desc':'Custom furniture, cabinetry, door framing, deck construction, and fine woodworking.',
+    'svc.carpenter.price':'From $65 / hr',
+    'svc.blacksmith':'Blacksmith','svc.blacksmith.desc':'Custom ironwork, decorative gates, railings, hinges, and ornamental metalwork.',
+    'svc.blacksmith.price':'From $90 / hr',
+    'svc.painter':'Painter','svc.painter.desc':'Interior and exterior painting, wallpaper removal, texture finishing, and color consultation.',
+    'svc.painter.price':'From $55 / hr',
+    'svc.construction':'Walls & Ceilings','svc.construction.desc':'Plastering, drywall, tiling, partition walls, false ceilings, and full renovation works.',
+    'svc.construction.price':'From $70 / hr',
+    'svc.findpro':'Find a Pro',
+    'emp.label':'Browse Professionals','emp.title':'Find Your Pro',
+    'emp.filter.all':'All','emp.available':'Available','emp.busy':'Busy',
+    'emp.hire':'Hire','emp.viewprofile':'View Profile','emp.perhr':'/hr',
+    'how.label':'Simple Process','how.title':'How It Works',
+    'how.s1.title':'Choose a Service','how.s1.desc':'Browse our six core trades and select the expert you need.',
+    'how.s2.title':'Pick a Pro','how.s2.desc':'Browse verified professionals, read reviews, compare prices, and choose the best fit.',
+    'how.s3.title':'Book & Describe','how.s3.desc':'Submit your request in under 2 minutes. The pro confirms and schedules your appointment.',
+    'how.s4.title':'Job Done','how.s4.desc':'Your pro arrives on time. Pay securely and leave a review.',
+    'rev.label':'Client Feedback','rev.title':'What People Say',
+    'rev.1':'"The electrician fixed our panel in under two hours. Professional, clean, thorough. I\'d recommend FixIt to anyone."',
+    'rev.1.role':'Homeowner · Electrician',
+    'rev.2':'"Our plumber diagnosed the leak in minutes and had it fixed the same day. No hidden fees at all."',
+    'rev.2.role':'Apartment Owner · Plumber',
+    'rev.3':'"Beautiful custom shelving by the carpenter. The craftsmanship is stunning and fits the room perfectly."',
+    'rev.3.role':'Property Owners · Carpenter',
+    'rev.4':'"The walls and ceiling renovation was flawless. Done on time, clean, and the finish is incredible."',
+    'rev.4.role':'Villa Owner · Construction',
+    'rev.5':'"Our painter transformed the whole house in three days. Impeccable prep work, zero mess."',
+    'rev.5.role':'Homeowner · Painter',
+    'rev.6':'"Fast booking, reliable pros, smooth payment. FixIt is my go-to for all home repairs."',
+    'rev.6.role':'Repeat Customer · Multiple',
+    'footer.tagline':'Connecting homeowners with skilled tradespeople. Quality you can count on.',
+    'footer.services':'Services','footer.company':'Company','footer.support':'Support',
+    'footer.about':'About Us','footer.careers':'Careers','footer.joinpro':'Join as a Pro','footer.blog':'Blog',
+    'footer.help':'Help Center','footer.privacy':'Privacy Policy','footer.terms':'Terms of Service','footer.contact':'Contact',
+    'footer.copy':'© 2026 FixIt Home Services. All rights reserved.',
+    'book.title':'Book a Service','book.sub':"Fill in your details and we'll connect you with a top-rated pro.",
+    'form.name':'Full Name','form.name.ph':'John Doe','form.email':'Email','form.phone':'Phone',
+    'form.service':'Service Type','form.service.ph':'Select a service...',
+    'form.date':'Preferred Date','form.time':'Preferred Time',
+    'form.time.m':'Morning (8–12)','form.time.a':'Afternoon (12–5)','form.time.e':'Evening (5–8)',
+    'form.desc':'Describe the Job','form.desc.ph':'Tell us what needs to be done...','form.confirm':'Confirm Booking →',
+    'reg.title':'Join as a Pro','reg.sub':'Register your professional profile — customers will find and hire you directly.',
+    'reg.trade':'Trade / Specialty','reg.city':'City / Area','reg.city.ph':'e.g. Downtown, Suburbs...',
+    'reg.exp':'Years of Experience','reg.price':'Your Hourly Rate ($)','reg.perhr':'/ hr',
+    'reg.bio':'Short Bio','reg.bio.ph':'Tell clients about yourself, your experience, and what makes you great...',
+    'reg.avail':'Availability','reg.avail.yes':'Available Now','reg.avail.no':'Currently Busy',
+    'reg.submit':'Create My Profile →',
+    'toast.booking':'✓ Booking submitted! We\'ll be in touch shortly.',
+    'toast.register':'✓ Profile created! You\'re now listed as a Pro.',
+    'toast.hired':'✓ Request sent! The pro will contact you soon.',
+    'toast.fill':'Please fill in all required fields.',
+    'prof.experience':'Experience','prof.location':'Location','prof.rate':'Rate',
+    'prof.availability':'Availability','prof.requestjob':'Request This Pro',
+    'prof.reviews':'Customer Reviews','prof.noreview':'No reviews yet.',
+    'trade.electrician':'Electrician','trade.plumber':'Plumber','trade.carpenter':'Carpenter',
+    'trade.blacksmith':'Blacksmith','trade.painter':'Painter','trade.construction':'Walls & Ceilings',
+    'langbtn':'🌐 عربي'
+  },
+  ar: {
+    'nav.services':'الخدمات','nav.pros':'ابحث عن محترف','nav.how':'كيف يعمل',
+    'nav.reviews':'التقييمات','nav.register':'انضم كمحترف',
+    'hero.badge':'منصة خدمات المنزل الموثوقة',
+    'hero.h1':'منزلك،<br/><em>إصلاح</em> صحيح.<br/><span class="outline">مضمون.</span>',
+    'hero.sub':'تواصل مع كهربائيين وسباكين ونجارين وحدادين ودهانين ومتخصصي بناء معتمدين — بسرعة وموثوقية.',
+    'hero.explore':'استكشف الخدمات','hero.quote':'احصل على عرض مجاني',
+    'hero.stat1':'وظيفة مكتملة','hero.stat2':'محترف موثّق','hero.stat3':'متوسط التقييم','hero.stat4':'وقت الاستجابة',
+    'search.placeholder':'ما الخدمة التي تحتاجها؟','search.btn':'بحث ←',
+    'search.loc0':'أي موقع','search.loc1':'وسط المدينة','search.loc2':'الضواحي','search.loc3':'الحي الشمالي','search.loc4':'الحي الجنوبي',
+    'services.label':'ما نقدمه','services.title':'خدماتنا',
+    'svc.electrician':'كهربائي','svc.electrician.desc':'أسلاك، قواطع دارة، ترقيات اللوحة، تركيب مقابس، وفحص كهربائي كامل.',
+    'svc.electrician.price':'من ٨٠$ / ساعة',
+    'svc.plumber':'سباك','svc.plumber.desc':'إصلاح أنابيب، فتح انسدادات، تركيب سخانات مياه، كشف تسربات، وتجديد شبكات السباكة.',
+    'svc.plumber.price':'من ٧٥$ / ساعة',
+    'svc.carpenter':'نجار','svc.carpenter.desc':'أثاث مخصص، خزائن، تأطير أبواب، بناء أسطح، ونجارة دقيقة.',
+    'svc.carpenter.price':'من ٦٥$ / ساعة',
+    'svc.blacksmith':'حداد','svc.blacksmith.desc':'أعمال حديدية مخصصة، بوابات زخرفية، حواجز، مفصلات، وتشكيل معادن.',
+    'svc.blacksmith.price':'من ٩٠$ / ساعة',
+    'svc.painter':'دهان','svc.painter.desc':'دهان داخلي وخارجي، إزالة ورق الحائط، تشطيبات ملمسية، واستشارات ألوان.',
+    'svc.painter.price':'من ٥٥$ / ساعة',
+    'svc.construction':'جدران وأسقف','svc.construction.desc':'لياسة، جدران جبسية، بلاط، جدران فاصلة، أسقف معلقة، وأعمال التجديد الكاملة.',
+    'svc.construction.price':'من ٧٠$ / ساعة',
+    'svc.findpro':'ابحث عن محترف',
+    'emp.label':'تصفح المحترفين','emp.title':'اعثر على محترفك',
+    'emp.filter.all':'الكل','emp.available':'متاح','emp.busy':'مشغول',
+    'emp.hire':'توظيف','emp.viewprofile':'عرض الملف','emp.perhr':'/ساعة',
+    'how.label':'عملية بسيطة','how.title':'كيف يعمل',
+    'how.s1.title':'اختر خدمة','how.s1.desc':'تصفح مهننا الست الأساسية واختر الخبير المناسب لمشروعك.',
+    'how.s2.title':'اختر محترفًا','how.s2.desc':'تصفح المحترفين الموثّقين، اقرأ التقييمات، قارن الأسعار، واختر الأنسب.',
+    'how.s3.title':'احجز وصف المهمة','how.s3.desc':'قدّم طلبك في أقل من دقيقتين. يؤكد المحترف ويحدد موعدك.',
+    'how.s4.title':'المهمة منجزة','how.s4.desc':'يصل محترفك في الوقت المحدد. ادفع بأمان واترك تقييمك.',
+    'rev.label':'آراء العملاء','rev.title':'ماذا يقول الناس',
+    'rev.1':'"أصلح الكهربائي لوحتنا في أقل من ساعتين. محترف ونظيف ودقيق. أوصي بـ FixIt لأي شخص."',
+    'rev.1.role':'صاحب منزل · كهربائي',
+    'rev.2':'"شخّص السباك التسرب في دقائق وأصلحه في نفس اليوم. لا رسوم خفية على الإطلاق."',
+    'rev.2.role':'مالك شقة · سباك',
+    'rev.3':'"رفوف مخصصة رائعة من النجار. الحرفية مذهلة وتناسب الغرفة تمامًا."',
+    'rev.3.role':'ملاك عقار · نجار',
+    'rev.4':'"تجديد الجدران والأسقف كان لا تشوبه شائبة. في الوقت المحدد، نظيف، والتشطيب رائع."',
+    'rev.4.role':'مالك فيلا · جدران وأسقف',
+    'rev.5':'"حوّل الدهان منزلنا بالكامل في ثلاثة أيام. تحضير ممتاز، لا فوضى."',
+    'rev.5.role':'صاحب منزل · دهان',
+    'rev.6':'"حجز سريع، محترفون موثوقون، دفع سلس. FixIt هو خياري الأول لكل إصلاحات المنزل."',
+    'rev.6.role':'عميل متكرر · خدمات متعددة',
+    'footer.tagline':'نربط أصحاب المنازل بالحرفيين المهرة. جودة يمكنك الاعتماد عليها.',
+    'footer.services':'الخدمات','footer.company':'الشركة','footer.support':'الدعم',
+    'footer.about':'من نحن','footer.careers':'الوظائف','footer.joinpro':'انضم كمحترف','footer.blog':'المدونة',
+    'footer.help':'مركز المساعدة','footer.privacy':'سياسة الخصوصية','footer.terms':'شروط الخدمة','footer.contact':'اتصل بنا',
+    'footer.copy':'© ٢٠٢٦ FixIt لخدمات المنزل. جميع الحقوق محفوظة.',
+    'book.title':'احجز خدمة','book.sub':'أدخل تفاصيلك وسنربطك بمحترف متميز.',
+    'form.name':'الاسم الكامل','form.name.ph':'محمد أحمد','form.email':'البريد الإلكتروني','form.phone':'الهاتف',
+    'form.service':'نوع الخدمة','form.service.ph':'اختر خدمة...',
+    'form.date':'التاريخ المفضل','form.time':'الوقت المفضل',
+    'form.time.m':'صباحاً (٨–١٢)','form.time.a':'ظهراً (١٢–٥)','form.time.e':'مساءً (٥–٨)',
+    'form.desc':'وصف المهمة','form.desc.ph':'أخبرنا ما الذي يحتاج إلى إصلاح...','form.confirm':'تأكيد الحجز ←',
+    'reg.title':'انضم كمحترف','reg.sub':'سجّل ملفك المهني — سيجدك العملاء ويوظفونك مباشرة.',
+    'reg.trade':'المهنة / التخصص','reg.city':'المدينة / المنطقة','reg.city.ph':'مثال: وسط المدينة...',
+    'reg.exp':'سنوات الخبرة','reg.price':'سعرك بالساعة ($)','reg.perhr':'/ ساعة',
+    'reg.bio':'نبذة مختصرة','reg.bio.ph':'أخبر العملاء عن نفسك وخبرتك وما يميزك...',
+    'reg.avail':'التوفر','reg.avail.yes':'متاح الآن','reg.avail.no':'مشغول حاليًا',
+    'reg.submit':'إنشاء ملفي المهني ←',
+    'toast.booking':'✓ تم إرسال الحجز! سنتواصل معك قريبًا.',
+    'toast.register':'✓ تم إنشاء الملف! أنت مدرج الآن كمحترف.',
+    'toast.hired':'✓ تم إرسال الطلب! سيتواصل معك المحترف قريبًا.',
+    'toast.fill':'يرجى ملء جميع الحقول المطلوبة.',
+    'prof.experience':'الخبرة','prof.location':'الموقع','prof.rate':'السعر',
+    'prof.availability':'التوفر','prof.requestjob':'طلب هذا المحترف',
+    'prof.reviews':'تقييمات العملاء','prof.noreview':'لا توجد تقييمات بعد.',
+    'trade.electrician':'كهربائي','trade.plumber':'سباك','trade.carpenter':'نجار',
+    'trade.blacksmith':'حداد','trade.painter':'دهان','trade.construction':'جدران وأسقف',
+    'langbtn':'🌐 English'
+  }
+};
+
+let currentLang = 'en';
+let currentTheme = 'dark';
+
+function t(key){ return (i18n[currentLang][key] || i18n['en'][key] || key); }
+
+function applyTranslations(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    el.textContent = t(key);
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    const key = el.getAttribute('data-i18n-html');
+    el.innerHTML = t(key);
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key = el.getAttribute('data-i18n-placeholder');
+    el.placeholder = t(key);
+  });
+  document.getElementById('langBtn').textContent = t('langbtn');
+  renderEmployees();
+}
+
+function toggleLang(){
+  currentLang = (currentLang === 'en') ? 'ar' : 'en';
+  const html = document.documentElement;
+  html.lang = currentLang;
+  html.dir = (currentLang === 'ar') ? 'rtl' : 'ltr';
+  applyTranslations();
+}
+
+function toggleTheme(){
+  currentTheme = (currentTheme === 'dark') ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  document.getElementById('themeBtn').textContent = (currentTheme === 'dark') ? '🌙' : '☀️';
+}
+
+// ══════════════════════════════════════════════════
+// EMPLOYEE DATA
+// ══════════════════════════════════════════════════
+const tradeColors = {
+  electrician:'#f5a623',plumber:'#3a9ad9',carpenter:'#b07a4b',
+  blacksmith:'#999',painter:'#e84393',construction:'#27ae60'
+};
+const tradeIcons = {
+  electrician:'⚡',plumber:'🔧',carpenter:'🪵',
+  blacksmith:'🔩',painter:'🎨',construction:'🧱'
+};
+
+let employees = [
+  {id:1,name:'Ahmed Khalid',trade:'electrician',city:'Downtown',exp:12,price:95,rating:4.9,reviews:87,bio:'Licensed master electrician with 12 years experience. Specialized in smart home wiring and panel upgrades.',available:true,emoji:'👷'},
+  {id:2,name:'Omar Hassan',trade:'electrician',city:'Suburbs',exp:7,price:80,rating:4.7,reviews:54,bio:'Reliable and fast. Expert in residential wiring and energy-efficient solutions.',available:true,emoji:'🔌'},
+  {id:3,name:'Carlos Rivera',trade:'plumber',city:'North District',exp:15,price:85,rating:4.8,reviews:120,bio:'Master plumber specialized in leak detection, pipe replacement, and full bathroom renovations.',available:true,emoji:'🪠'},
+  {id:4,name:'Yusuf Al-Amin',trade:'plumber',city:'Downtown',exp:9,price:75,rating:4.6,reviews:63,bio:'Certified plumber. Experienced in emergency repairs and water heater installations.',available:false,emoji:'💧'},
+  {id:5,name:'Michael Chen',trade:'carpenter',city:'Suburbs',exp:18,price:90,rating:5.0,reviews:95,bio:'Master craftsman. Custom furniture, built-ins, and finish carpentry. Every piece is a work of art.',available:true,emoji:'🪵'},
+  {id:6,name:'Tariq Saad',trade:'carpenter',city:'South District',exp:10,price:70,rating:4.5,reviews:41,bio:'Specialized in kitchen cabinets, wardrobes, and custom shelving. Quick turnaround.',available:true,emoji:'🛠️'},
+  {id:7,name:'Ibrahim Malik',trade:'blacksmith',city:'Downtown',exp:22,price:110,rating:4.9,reviews:38,bio:'Traditional and modern ironwork. Custom gates, railings, balconies. Each piece hand-forged.',available:true,emoji:'⚒️'},
+  {id:8,name:'Elena Vasquez',trade:'painter',city:'North District',exp:8,price:60,rating:4.8,reviews:76,bio:'Interior and exterior specialist. Color consultant. Impeccable prep work and clean finish.',available:false,emoji:'🎨'},
+  {id:9,name:'Sami Nouri',trade:'painter',city:'Suburbs',exp:5,price:55,rating:4.4,reviews:29,bio:'Fast, clean, and reliable. Expert in textured finishes and feature walls.',available:true,emoji:'🖌️'},
+  {id:10,name:'Khalil Mansour',trade:'construction',city:'Downtown',exp:14,price:85,rating:4.9,reviews:102,bio:'Plastering, drywall, and false ceiling specialist. Over 200 renovation projects completed.',available:true,emoji:'🧱'},
+  {id:11,name:'Ramzi Farouk',trade:'construction',city:'South District',exp:11,price:75,rating:4.7,reviews:67,bio:'Tiling, partition walls, and full room renovations. Expert finish and attention to detail.',available:true,emoji:'🏗️'},
+  {id:12,name:'Nour El-Din',trade:'electrician',city:'South District',exp:4,price:65,rating:4.3,reviews:18,bio:'Young and dedicated. Specializes in lighting installations and electrical fault diagnosis.',available:true,emoji:'💡'},
+];
+
+let currentFilter = 'all';
+let selectedEmployeeId = null;
+
+function starsHtml(rating){
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5 ? 1 : 0;
+  let s = '';
+  for(let i=0;i<full;i++) s += '★';
+  if(half) s += '☆';
+  return s;
+}
+
+function tradeName(trade){ return t('trade.'+trade); }
+function tradeKey(trade){ return 'svc.'+trade; }
+
+function renderEmployees(){
+  const grid = document.getElementById('employeesGrid');
+  const filtered = currentFilter==='all' ? employees : employees.filter(e=>e.trade===currentFilter);
+  grid.innerHTML = filtered.map(emp=>`
+    <div class="emp-card" id="empcard-${emp.id}">
+      <div class="${emp.available?'emp-badge-available':'emp-badge-busy'}"></div>
+      <div class="emp-card-top">
+        <div class="emp-avatar" style="background:${tradeColors[emp.trade]}22;border-color:${tradeColors[emp.trade]}44">${emp.emoji}</div>
+        <div class="emp-info">
+          <div class="emp-name">${emp.name}</div>
+          <div class="emp-trade">${tradeName(emp.trade)}</div>
+          <div class="emp-trade-badge" style="background:${tradeColors[emp.trade]}22;color:${tradeColors[emp.trade]}">${tradeIcons[emp.trade]} ${emp.city}</div>
+        </div>
+      </div>
+      <div class="emp-stars">
+        <span class="stars">${starsHtml(emp.rating)}</span>
+        <span class="rating-val">${emp.rating}</span>
+        <span class="review-count">(${emp.reviews})</span>
+      </div>
+      <div class="emp-bio">${emp.bio}</div>
+      <div class="emp-footer">
+        <div>
+          <div class="emp-price">$${emp.price}<span style="font-size:0.7rem;color:var(--muted)"> ${t('emp.perhr')}</span></div>
+          <div class="emp-price-label">${emp.available ? t('emp.available') : t('emp.busy')}</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="hire-btn" style="background:var(--surface);color:var(--text);border:1px solid var(--border)" onclick="viewEmployeeProfile(${emp.id})">${t('emp.viewprofile')}</button>
+          <button class="hire-btn" onclick="hireEmployee(${emp.id})">${t('emp.hire')}</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterEmployees(trade){
+  currentFilter = trade;
+  document.querySelectorAll('.filter-btn').forEach(b=>{
+    b.classList.toggle('active', b.getAttribute('data-filter')===trade);
+  });
+  renderEmployees();
+}
+
+// ══════════════════════════════════════════════════
+// EMPLOYEE PROFILE MODAL
+// ══════════════════════════════════════════════════
+function viewEmployeeProfile(id){
+  const emp = employees.find(e=>e.id===id);
+  if(!emp) return;
+  selectedEmployeeId = id;
+  const reviewSnippets = [
+    {author:'James O.',text:'Excellent work, very professional.',rating:5},
+    {author:'Sara M.',text:'Fast and clean. Highly recommend.',rating:5},
+    {author:'Tom K.',text:'Good job, came on time.',rating:4},
+  ];
+  const reviewsHtml = emp.reviews > 0 ? reviewSnippets.map(r=>`
+    <div style="padding:14px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:13px;font-weight:600">${r.author}</span>
+        <span style="color:var(--accent);font-size:0.8rem">${'★'.repeat(r.rating)}</span>
+      </div>
+      <p style="font-size:12px;color:var(--muted)">${r.text}</p>
+    </div>
+  `).join('') : `<p style="color:var(--muted);font-size:13px">${t('prof.noreview')}</p>`;
+
+  document.getElementById('empModalBody').innerHTML = `
+    <div class="emp-profile-header">
+      <div class="emp-profile-avatar" style="background:${tradeColors[emp.trade]}22;border-color:${tradeColors[emp.trade]}">${emp.emoji}</div>
+      <div style="flex:1">
+        <div class="emp-profile-trade">${tradeName(emp.trade)}</div>
+        <div class="emp-profile-name">${emp.name}</div>
+        <div class="emp-stars" style="margin-top:6px">
+          <span class="stars">${starsHtml(emp.rating)}</span>
+          <span class="rating-val">${emp.rating}</span>
+          <span class="review-count">(${emp.reviews} ${currentLang==='ar'?'تقييم':'reviews'})</span>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div class="emp-profile-rate">$${emp.price}</div>
+        <div class="emp-profile-rate-lbl">${t('emp.perhr')}</div>
+      </div>
+    </div>
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-item-label">${t('prof.experience')}</div>
+        <div class="info-item-val">${emp.exp} ${currentLang==='ar'?'سنة':'yrs'}</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">${t('prof.location')}</div>
+        <div class="info-item-val">${emp.city}</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">${t('prof.availability')}</div>
+        <div class="info-item-val" style="color:${emp.available?'#27ae60':'#e74c3c'}">${emp.available?t('emp.available'):t('emp.busy')}</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">${t('prof.rate')}</div>
+        <div class="info-item-val">$${emp.price}${t('emp.perhr')}</div>
+      </div>
+    </div>
+    <div style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;padding:16px;background:var(--surface);border:1px solid var(--border)">${emp.bio}</div>
+    <div style="font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px">${t('prof.reviews')}</div>
+    <div style="margin-bottom:24px">${reviewsHtml}</div>
+    <button class="submit-btn" onclick="hireEmployee(${emp.id});closeModal('empModal')">${t('prof.requestjob')}</button>
+  `;
+  openModal('empModal');
+}
+
+function hireEmployee(id){
+  const emp = employees.find(e=>e.id===id);
+  if(!emp) return;
+  selectedEmployeeId = id;
+  closeModal('empModal');
+  const serviceVal = emp.trade;
+  openBookingModal(serviceVal, emp.name);
+}
+
+// ══════════════════════════════════════════════════
+// MODALS
+// ══════════════════════════════════════════════════
+function openModal(id){ document.getElementById(id).classList.add('active'); }
+function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+function closeModalOutside(e,id){ if(e.target===document.getElementById(id)) closeModal(id); }
+
+function openBookingModal(service, proName){
+  if(proName){
+    document.getElementById('bookingTitle').textContent = (currentLang==='ar'?'طلب ':'Book ') + proName;
+    document.getElementById('bookingSub').textContent = currentLang==='ar'
+      ? `أرسل طلبك وسيتواصل معك ${proName} قريبًا.`
+      : `Submit your request and ${proName} will contact you shortly.`;
+  } else {
+    document.getElementById('bookingTitle').textContent = t('book.title');
+    document.getElementById('bookingSub').textContent = t('book.sub');
+  }
+  if(service) document.getElementById('bService').value = service;
+  openModal('bookingModal');
+}
+
+function openRegisterModal(){ openModal('registerModal'); }
+
+function submitBooking(){
+  const name=document.getElementById('bName').value.trim();
+  const email=document.getElementById('bEmail').value.trim();
+  const service=document.getElementById('bService').value;
+  if(!name||!email||!service){ showToast(t('toast.fill'),true); return; }
+  closeModal('bookingModal');
+  showToast(t('toast.booking'));
+  ['bName','bEmail','bPhone','bDate','bDesc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('bService').value='';
+  selectedEmployeeId=null;
+}
+
+function submitRegister(){
+  const name=document.getElementById('rName').value.trim();
+  const email=document.getElementById('rEmail').value.trim();
+  const trade=document.getElementById('rTrade').value;
+  const price=document.getElementById('rPrice').value;
+  const city=document.getElementById('rCity').value.trim();
+  const exp=document.getElementById('rExp').value;
+  const bio=document.getElementById('rBio').value.trim();
+  const avail=document.getElementById('rAvail').value;
+  if(!name||!email||!trade||!price){ showToast(t('toast.fill'),true); return; }
+  const newEmp = {
+    id: Date.now(), name, trade, city:city||'Local Area',
+    exp: parseInt(exp)||0, price:parseInt(price)||50,
+    rating:0, reviews:0, bio: bio||(currentLang==='ar'?'محترف جديد على المنصة.':'New professional on the platform.'),
+    available: avail==='available',
+    emoji: tradeIcons[trade]||'👷'
+  };
+  employees.unshift(newEmp);
+  closeModal('registerModal');
+  showToast(t('toast.register'));
+  ['rName','rEmail','rPhone','rCity','rExp','rPrice','rBio'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('rTrade').value='';
+  filterEmployees('all');
+  setTimeout(()=>document.getElementById('employees').scrollIntoView({behavior:'smooth'}),600);
+}
+
+// ══════════════════════════════════════════════════
+// SEARCH
+// ══════════════════════════════════════════════════
+const searchMap = {
+  electrician:['electric','kahr','كهرب'],
+  plumber:['plumb','pipe','sabak','سباك'],
+  carpenter:['carp','wood','najar','نجار'],
+  blacksmith:['black','iron','hadad','حداد'],
+  painter:['paint','dahan','دهان'],
+  construction:['wall','ceiling','construct','plaster','جدار','سقف','بناء']
+};
+
+function handleSearch(){
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  if(!q){ document.getElementById('services').scrollIntoView({behavior:'smooth'}); return; }
+  let matched = null;
+  for(const [trade,keys] of Object.entries(searchMap)){
+    if(keys.some(k=>q.includes(k))){ matched=trade; break; }
+  }
+  document.getElementById('employees').scrollIntoView({behavior:'smooth'});
+  if(matched) setTimeout(()=>filterEmployees(matched),600);
+}
+
+document.getElementById('searchInput').addEventListener('keydown',e=>{ if(e.key==='Enter') handleSearch(); });
+
+// ══════════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════════
+function showToast(msg,isError){
+  const toast=document.getElementById('toast');
+  toast.textContent=msg;
+  toast.className='toast'+(isError?' error':'');
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'),4000);
+}
+
+// ══════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════
+document.getElementById('bDate').min = new Date().toISOString().split('T')[0];
+applyTranslations();
+renderEmployees();
+</script>
+</body>
+</html>
